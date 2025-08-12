@@ -761,7 +761,7 @@
 
         <div class="row align-items-center">
             <div class="col-md-6">
-                <p class="mb-0 text-light-emphasis">&copy; ۱۴۰۳ بیزتو. تمامی حقوق محفوظ است.</p>
+                <p class="mb-0 text-light-emphasis">&copy; ۱۴۰۴ بیزتو. تمامی حقوق محفوظ است.</p>
             </div>
             <div class="col-md-6 text-md-end">
                 <a href="#" class="text-light-emphasis text-decoration-none me-3">حریم خصوصی</a>
@@ -773,83 +773,116 @@
 </footer>
 
 <!-- Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header border-0">
-                <h5 class="modal-title fw-bold">ورود به پنل کاربری</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">ورود به حساب کاربری</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('login') }}">
+                <form id="loginForm">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label">شماره موبایل یا ایمیل</label>
-                        <input type="text" name="email" class="form-control" placeholder="شماره موبایل یا ایمیل خود را وارد کنید" required>
+                        <label class="form-label">شماره موبایل</label>
+                        <input type="tel" name="phone" class="form-control" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required>
+                        <div class="invalid-feedback" data-for="phone"></div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">رمز عبور</label>
-                        <input type="password" name="password" class="form-control" placeholder="رمز عبور را وارد کنید" required>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="remember" id="remember">
-                            <label class="form-check-label" for="remember">مرا به خاطر بسپار</label>
+
+                    <div id="loginVerificationSection" style="display: none;">
+                        <div class="mb-3">
+                            <label class="form-label">کد تایید</label>
+                            <input type="text" name="code" class="form-control" placeholder="کد ۵ رقمی ارسال شده" required maxlength="5">
+                            <div class="invalid-feedback" data-for="code"></div>
                         </div>
-                        <a href="{{ route('password.request') }}" class="text-decoration-none">فراموشی رمز عبور؟</a>
+                        <button type="button" id="loginVerifyBtn" class="btn btn-primary w-100">تایید و ورود</button>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">ورود</button>
+
+                    <button type="button" id="loginSendCodeBtn" class="btn btn-primary w-100">دریافت کد تایید</button>
                 </form>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <p>حساب کاربری ندارید؟ <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">ثبت نام کنید</a></p>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Register Modal -->
-<div class="modal fade" id="registerModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header border-0">
-                <h5 class="modal-title fw-bold">ثبت نام در بیزتو</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">ثبت نام در bizto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('register') }}">
+                <form id="registerForm">
                     @csrf
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">نام</label>
                             <input type="text" name="first_name" class="form-control" placeholder="نام خود را وارد کنید" required>
+                            <div class="invalid-feedback" data-for="first_name"></div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">نام خانوادگی</label>
                             <input type="text" name="last_name" class="form-control" placeholder="نام خانوادگی را وارد کنید" required>
+                            <div class="invalid-feedback" data-for="last_name"></div>
                         </div>
                     </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">نام کسب و کار</label>
+                        <input type="text" name="business_name" class="form-control" placeholder="نام کسب و کار خود را وارد کنید" required>
+                        <div class="invalid-feedback" data-for="business_name"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">نوع کسب و کار</label>
+                        <select name="business_type" class="form-control" required>
+                            <option value="">انتخاب کنید</option>
+                            <option value="restaurant">رستوران</option>
+                            <option value="shop">فروشگاه</option>
+                            <option value="service">خدمات</option>
+                            <option value="other">سایر</option>
+                        </select>
+                        <div class="invalid-feedback" data-for="business_type"></div>
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label">شماره موبایل</label>
                         <input type="tel" name="phone" class="form-control" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required>
+                        <div class="invalid-feedback" data-for="phone"></div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">ایمیل</label>
-                        <input type="email" name="email" class="form-control" placeholder="example@domain.com" required>
+
+                    <div id="registerVerificationSection" style="display: none;">
+                        <div class="mb-3">
+                            <label class="form-label">کد تایید</label>
+                            <input type="text" name="code" class="form-control" placeholder="کد ۵ رقمی ارسال شده" required maxlength="5">
+                            <div class="invalid-feedback" data-for="code"></div>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" name="terms" id="terms" required>
+                            <label class="form-check-label" for="terms">
+                                قوانین و مقررات را می‌پذیرم
+                            </label>
+                            <div class="invalid-feedback" data-for="terms"></div>
+                        </div>
+
+                        <button type="button" id="registerVerifyBtn" class="btn btn-warning w-100 text-dark fw-bold">
+                            تایید و ثبت نام
+                        </button>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">رمز عبور</label>
-                        <input type="password" name="password" class="form-control" placeholder="حداقل ۸ کاراکتر" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">تکرار رمز عبور</label>
-                        <input type="password" name="password_confirmation" class="form-control" placeholder="رمز عبور را مجدداً وارد کنید" required>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" name="terms" id="terms" required>
-                        <label class="form-check-label" for="terms">
-                            قوانین و مقررات را می‌پذیرم
-                        </label>
-                    </div>
-                    <button type="submit" class="btn btn-warning w-100 text-dark fw-bold">ثبت نام</button>
+
+                    <button type="button" id="registerSendCodeBtn" class="btn btn-warning w-100 text-dark fw-bold">
+                        دریافت کد تایید
+                    </button>
                 </form>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <p>قبلاً ثبت نام کرده‌اید؟ <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">ورود به حساب</a></p>
             </div>
         </div>
     </div>
@@ -857,6 +890,421 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- ابتدا jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- سپس Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded - Register script running');
+
+        const registerBtn = document.getElementById('registerSendCodeBtn');
+        if (!registerBtn) {
+            console.error('Could not find register button!');
+            return;
+        }
+
+        registerBtn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            console.log('Register button clicked');
+
+            // اعتبارسنجی فیلدها
+            const form = document.getElementById('registerForm');
+            const formData = {
+                phone: form.querySelector('[name="phone"]').value,
+                first_name: form.querySelector('[name="first_name"]').value,
+                last_name: form.querySelector('[name="last_name"]').value,
+                business_name: form.querySelector('[name="business_name"]').value,
+                business_type: form.querySelector('[name="business_type"]').value,
+                action: 'register',
+                _token: form.querySelector('[name="_token"]').value
+            };
+
+            console.log('Form data:', formData);
+
+            try {
+                const response = await fetch('/send-verification-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': formData._token
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+                console.log('Server response:', data);
+
+                if (!response.ok) throw data;
+
+                // نمایش بخش کد تایید
+                document.getElementById('registerVerificationSection').style.display = 'block';
+                registerBtn.style.display = 'none';
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert(error.error || 'خطایی رخ داده است');
+            }
+        });
+    });
+
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // ----------------------------
+        // توابع عمومی و ابزارها
+        // ----------------------------
+
+        // اعتبارسنجی شماره موبایل ایرانی
+        function isValidIranianPhoneNumber(phone) {
+            return /^09[0-9]{9}$/.test(phone);
+        }
+
+        // فرمت‌دهی شماره موبایل
+        function formatPhoneNumber(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.startsWith('98')) {
+                value = value.substring(2);
+            }
+            if (value.startsWith('0')) {
+                value = value.substring(1);
+            }
+            if (value.length > 0) {
+                value = '0' + value;
+            }
+            input.value = value;
+        }
+
+        // نمایش خطا در فیلد
+        function showError(input, message) {
+            const feedback = document.querySelector(`.invalid-feedback[data-for="${input.name}"]`);
+            input.classList.add('is-invalid');
+            if (feedback) feedback.textContent = message;
+        }
+
+        // حذف خطا از فیلد
+        function clearError(input) {
+            const feedback = document.querySelector(`.invalid-feedback[data-for="${input.name}"]`);
+            input.classList.remove('is-invalid');
+            if (feedback) feedback.textContent = '';
+        }
+
+        // مدیریت وضعیت دکمه (لودینگ)
+        function setButtonLoading(button, isLoading) {
+            if (isLoading) {
+                button.disabled = true;
+                button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> در حال پردازش...';
+            } else {
+                button.disabled = false;
+                if (button.id === 'loginSendCodeBtn') {
+                    button.textContent = 'دریافت کد تایید';
+                } else if (button.id === 'loginVerifyBtn') {
+                    button.textContent = 'تایید و ورود';
+                } else if (button.id === 'registerSendCodeBtn') {
+                    button.textContent = 'دریافت کد تایید';
+                } else if (button.id === 'registerVerifyBtn') {
+                    button.textContent = 'تایید و ثبت نام';
+                }
+            }
+        }
+
+        // ----------------------------
+        // مدیریت مدال‌ها
+        // ----------------------------
+
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+
+        // رویدادهای مدال لاگین
+        document.getElementById('loginModal').addEventListener('hidden.bs.modal', function() {
+            document.getElementById('loginForm').reset();
+            document.getElementById('loginVerificationSection').style.display = 'none';
+            document.getElementById('loginSendCodeBtn').style.display = 'block';
+            document.querySelectorAll('#loginForm input').forEach(input => clearError(input));
+        });
+
+        // رویدادهای مدال ثبت نام
+        document.getElementById('registerModal').addEventListener('hidden.bs.modal', function() {
+            document.getElementById('registerForm').reset();
+            document.getElementById('registerVerificationSection').style.display = 'none';
+            document.getElementById('registerSendCodeBtn').style.display = 'block';
+            document.querySelectorAll('#registerForm input').forEach(input => clearError(input));
+        });
+
+        // ----------------------------
+        // لاگین
+        // ----------------------------
+
+        // اعتبارسنجی بلادرنگ فیلدهای لاگین
+        document.querySelectorAll('#loginForm input').forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.name === 'phone' && this.value && !isValidIranianPhoneNumber(this.value)) {
+                    showError(this, 'شماره موبایل معتبر نیست');
+                } else {
+                    clearError(this);
+                }
+            });
+        });
+
+        // ارسال کد تایید برای لاگین
+        document.getElementById('loginSendCodeBtn').addEventListener('click', async function() {
+            const phoneInput = document.querySelector('#loginForm input[name="phone"]');
+            const phone = phoneInput.value.trim();
+
+            // اعتبارسنجی
+            if (!phone) {
+                showError(phoneInput, 'شماره موبایل الزامی است');
+                return;
+            }
+
+            if (!isValidIranianPhoneNumber(phone)) {
+                showError(phoneInput, 'شماره موبایل معتبر نیست');
+                return;
+            }
+
+            const btn = this;
+            setButtonLoading(btn, true);
+
+            try {
+                const response = await fetch('/send-verification-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('#loginForm input[name="_token"]').value
+                    },
+                    body: JSON.stringify({ phone, action: 'login' })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) throw data;
+
+                // نمایش بخش کد تایید
+                document.getElementById('loginVerificationSection').style.display = 'block';
+                btn.style.display = 'none';
+
+                // فوکوس روی فیلد کد تایید
+                document.querySelector('#loginForm input[name="code"]').focus();
+
+                alert(`کد تایید به شماره ${phone} ارسال شد.`);
+            } catch (error) {
+                const errorMsg = error.error || 'خطایی در ارسال کد تایید رخ داده است';
+                if (error.retry_after) {
+                    const minutes = Math.floor(error.retry_after / 60);
+                    const seconds = error.retry_after % 60;
+                    alert(`${errorMsg}\nلطفاً ${minutes} دقیقه و ${seconds} ثانیه دیگر تلاش کنید.`);
+                } else {
+                    alert(errorMsg);
+                }
+            } finally {
+                setButtonLoading(btn, false);
+            }
+        });
+
+        // تایید کد و ورود
+        document.getElementById('loginVerifyBtn').addEventListener('click', async function() {
+            const phone = document.querySelector('#loginForm input[name="phone"]').value.trim();
+            const code = document.querySelector('#loginForm input[name="code"]').value.trim();
+
+            // اعتبارسنجی
+            if (!code || code.length !== 5) {
+                showError(document.querySelector('#loginForm input[name="code"]'), 'کد تایید باید ۵ رقمی باشد');
+                return;
+            }
+
+            const btn = this;
+            setButtonLoading(btn, true);
+
+            try {
+                const response = await fetch('/verify-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('#loginForm input[name="_token"]').value
+                    },
+                    body: JSON.stringify({ phone, code, action: 'login' })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) throw data;
+
+                // در صورت موفقیت
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else {
+                    window.location.reload();
+                }
+            } catch (error) {
+                const errorMsg = error.error || 'خطایی در ورود رخ داده است';
+                alert(errorMsg);
+                document.querySelector('#loginForm input[name="code"]').value = '';
+                document.querySelector('#loginForm input[name="code"]').focus();
+            } finally {
+                setButtonLoading(btn, false);
+            }
+        });
+
+        // ----------------------------
+        // ثبت نام
+        // ----------------------------
+
+        // اعتبارسنجی بلادرنگ فیلدهای ثبت نام
+        document.querySelectorAll('#registerForm input, #registerForm select').forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.name === 'phone' && this.value && !isValidIranianPhoneNumber(this.value)) {
+                    showError(this, 'شماره موبایل معتبر نیست');
+                } else if (this.required && !this.value) {
+                    showError(this, 'این فیلد الزامی است');
+                } else {
+                    clearError(this);
+                }
+            });
+        });
+
+        // فرمت‌دهی شماره موبایل در ثبت نام
+        document.querySelector('#registerForm input[name="phone"]').addEventListener('input', function() {
+            formatPhoneNumber(this);
+        });
+
+        // ارسال کد تایید برای ثبت نام
+        document.getElementById('registerSendCodeBtn').addEventListener('click', async function() {
+
+            const form = document.getElementById('registerForm');
+            const phoneInput = form.querySelector('input[name="phone"]');
+            const phone = phoneInput.value.trim();
+
+            // اعتبارسنجی کلیه فیلدها
+            let isValid = true;
+            form.querySelectorAll('input[required], select[required]').forEach(input => {
+                if (!input.value) {
+                    showError(input, 'این فیلد الزامی است');
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) return;
+
+            if (!isValidIranianPhoneNumber(phone)) {
+                showError(phoneInput, 'شماره موبایل معتبر نیست');
+                return;
+            }
+
+            const btn = this;
+            setButtonLoading(btn, true);
+
+            try {
+                const formData = {
+                    phone,
+                    first_name: form.querySelector('input[name="first_name"]').value.trim(),
+                    last_name: form.querySelector('input[name="last_name"]').value.trim(),
+                    business_name: form.querySelector('input[name="business_name"]').value.trim(),
+                    business_type: form.querySelector('select[name="business_type"]').value,
+                    action: 'register'
+                };
+
+                const response = await fetch('/send-verification-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) throw data;
+
+                // نمایش بخش کد تایید
+                document.getElementById('registerVerificationSection').style.display = 'block';
+                btn.style.display = 'none';
+
+                // فوکوس روی فیلد کد تایید
+                document.querySelector('#registerForm input[name="code"]').focus();
+
+                alert(`کد تایید به شماره ${phone} ارسال شد.`);
+            } catch (error) {
+                const errorMsg = error.error || 'خطایی در ارسال کد تایید رخ داده است';
+                if (error.retry_after) {
+                    const minutes = Math.floor(error.retry_after / 60);
+                    const seconds = error.retry_after % 60;
+                    alert(`${errorMsg}\nلطفاً ${minutes} دقیقه و ${seconds} ثانیه دیگر تلاش کنید.`);
+                } else {
+                    alert(errorMsg);
+                }
+            } finally {
+                setButtonLoading(btn, false);
+            }
+        });
+
+        // تایید کد و ثبت نام نهایی
+        document.getElementById('registerVerifyBtn').addEventListener('click', async function() {
+            const form = document.getElementById('registerForm');
+            const codeInput = form.querySelector('input[name="code"]');
+            const termsInput = form.querySelector('input[name="terms"]');
+            const code = codeInput.value.trim();
+
+            // اعتبارسنجی
+            if (!code || code.length !== 5) {
+                showError(codeInput, 'کد تایید باید ۵ رقمی باشد');
+                return;
+            }
+
+            if (!termsInput.checked) {
+                showError(termsInput, 'لطفاً قوانین و مقررات را بپذیرید');
+                return;
+            }
+
+            const btn = this;
+            setButtonLoading(btn, true);
+
+            try {
+                const formData = {
+                    phone: form.querySelector('input[name="phone"]').value.trim(),
+                    code,
+                    first_name: form.querySelector('input[name="first_name"]').value.trim(),
+                    last_name: form.querySelector('input[name="last_name"]').value.trim(),
+                    business_name: form.querySelector('input[name="business_name"]').value.trim(),
+                    business_type: form.querySelector('select[name="business_type"]').value,
+                    action: 'register'
+                };
+
+                const response = await fetch('/verify-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) throw data;
+
+                // در صورت موفقیت
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else {
+                    window.location.reload();
+                }
+            } catch (error) {
+                const errorMsg = error.error || 'خطایی در ثبت نام رخ داده است';
+                alert(errorMsg);
+                codeInput.value = '';
+                codeInput.focus();
+            } finally {
+                setButtonLoading(btn, false);
+            }
+        });
+    });
+</script>
+
 
 <script>
     // Custom JavaScript for Bizto Laravel Blade
@@ -1033,5 +1481,7 @@
         });
     });
 </script>
+
+
 </body>
 </html>

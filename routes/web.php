@@ -1,23 +1,38 @@
 <?php
 
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// For now, we'll create simple placeholder routes
-Route::post('/login', function () {
-    return redirect('/')->with('success', 'ورود موفقیت آمیز بود!');
-})->name('login');
+// احراز هویت با SMS
+Route::post('/send-verification-code', [VerificationController::class, 'sendVerificationCode'])->name('send.verification.code');
+Route::post('/verify-code', [VerificationController::class, 'verifyCode'])->name('verify.code');
 
-Route::post('/register', function () {
-    return redirect('/')->with('success', 'ثبت نام موفقیت آمیز بود!');
+// ثبت نام
+Route::get('/register', function () {
+    return view('auth.register');
 })->name('register');
 
-Route::get('/forgot-password', function () {
-    return redirect('/')->with('info', 'لینک بازیابی رمز عبور ارسال شد.');
-})->name('password.request');
+Route::post('/register', [VerificationController::class, 'register'])->name('register.submit');
 
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+// داشبورد
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+
+Route::post('/test-route', function() {
+    return response()->json(['message' => 'Test successful']);
+});
+
+// برای صفحه ویرایش پروفایل
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/logout', [LogoutController::class, 'destroy'])->name('logout');
+});
+
+// سایر مسیرها...
