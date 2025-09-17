@@ -36,3 +36,8 @@ Route::middleware('auth')->group(function () {
 });
 
 // سایر مسیرها...
+
+//Fallback route for 404 - must be last
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});

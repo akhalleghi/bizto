@@ -413,12 +413,55 @@
         .btn:active {
             transform: translateY(0);
         }
+        
+        /* Glass & Navbar Enhancements */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .navbar.glassy {
+            background: linear-gradient(135deg, rgba(102,126,234,0.9), rgba(118,75,162,0.9)) !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,.15);
+        }
+        .navbar.scrolled {
+            background: #1a1f36 !important;
+            transition: background .3s ease;
+        }
+
+        /* Brand Logos */
+        .brand-logos img {
+            height: 36px;
+            opacity: 0.8;
+            filter: grayscale(100%);
+            transition: all .3s ease;
+        }
+        .brand-logos img:hover { opacity: 1; filter: grayscale(0); transform: translateY(-2px); }
+
+        /* Stats */
+        .stat-card { background: white; border-radius: 14px; padding: 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,.08); }
+        .stat-number { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg,#667eea,#764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { color: #6b7280; }
+
+        /* Testimonials */
+        .testimonial { background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,.08); height: 100%; }
+        .testimonial .avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg,#667eea,#764ba2); }
+
+        /* Pricing */
+        .pricing-card { background: #fff; border: 1px solid rgba(0,0,0,.06); border-radius: 16px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,.06); height: 100%; }
+        .pricing-card.popular { border: 2px solid #ffc107; position: relative; }
+        .pricing-badge { position: absolute; top: -12px; right: 20px; background: #ffc107; color: #000; font-weight: 700; padding: 6px 12px; border-radius: 999px; font-size: .85rem; }
+        .price { font-size: 2.2rem; font-weight: 800; }
+
+        /* FAQ */
+        .faq-item { background: #fff; border-radius: 12px; padding: 1rem 1.25rem; border: 1px solid rgba(0,0,0,.06); }
+        .faq-item + .faq-item { margin-top: .75rem; }
     </style>
 </head>
 <body>
 <!-- Header -->
 <header class="sticky-top">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark glassy">
         <div class="container">
             <a class="navbar-brand fw-bold fs-3" href="{{ url('/') }}">
                 <i class="fas fa-rocket text-warning me-2"></i>
@@ -481,11 +524,12 @@
                             مشاهده دمو
                         </button>
                     </div>
+                    
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="hero-image text-center">
-                    <div class="floating-card">
+                    <div class="floating-card glass">
                         <i class="fas fa-robot display-1 text-warning"></i>
                     </div>
                 </div>
@@ -560,6 +604,38 @@
         </div>
     </div>
 </section>
+
+<!-- Stats Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-6 col-lg-3">
+                <div class="stat-card text-center">
+                    <div class="stat-number" data-counter="true" data-target="1500">0</div>
+                    <div class="stat-label">+ کسب‌وکار فعال</div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="stat-card text-center">
+                    <div class="stat-number" data-counter="true" data-target="320">0</div>
+                    <div class="stat-label">+ کمپین اجرا شده</div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="stat-card text-center">
+                    <div class="stat-number" data-counter="true" data-target="98">0</div>
+                    <div class="stat-label">٪ رضایت کاربران</div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="stat-card text-center">
+                    <div class="stat-number" data-counter="true" data-target="30">0</div>
+                    <div class="stat-label">روز آزمایش رایگان</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
 
 <!-- Instagram Assistant Details -->
 <section class="py-5">
@@ -682,6 +758,134 @@
                     </div>
                     <h5 class="fw-bold">امنیت بالا</h5>
                     <p class="text-muted">حفاظت کامل از اطلاعات شما</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-primary mb-3">مشتریان ما چه می‌گویند؟</h2>
+            <p class="lead text-muted">بخشی از تجربه کاربران بیزتو</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="testimonial">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="avatar me-3 d-flex align-items-center justify-content-center text-white">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <div class="fw-bold">آرش راد</div>
+                            <div class="text-muted small">مدیر رستوران</div>
+                        </div>
+                    </div>
+                    <p class="mb-0">بیزتو با اتوماسیون پیامکی و تحلیل زمان انتشار، بازدهی تبلیغات ما را چند برابر کرد.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="testimonial">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="avatar me-3 d-flex align-items-center justify-content-center text-white">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <div class="fw-bold">لیلا کاظمی</div>
+                            <div class="text-muted small">فروشگاه پوشاک</div>
+                        </div>
+                    </div>
+                    <p class="mb-0">تولید محتوای هوشمند اینستاگرام واقعاً زمان ما را ذخیره کرد و فروش آنلاین را بالا برد.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="testimonial">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="avatar me-3 d-flex align-items-center justify-content-center text-white">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <div class="fw-bold">حسام بیگی</div>
+                            <div class="text-muted small">خدمات آرایشی</div>
+                        </div>
+                    </div>
+                    <p class="mb-0">باشگاه مشتریان بیزتو کمک کرد روابط بهتری با مشتریان داشته باشیم.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-primary mb-3">پلن‌های قیمت‌گذاری</h2>
+            <p class="lead text-muted">یک ماه اول رایگان، سپس پلن سالانه</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-5">
+                <div class="pricing-card h-100">
+                    <h5 class="fw-bold mb-2">یک ماه اول رایگان</h5>
+                    <div class="price mb-2">رایگان (ماه اول)</div>
+                    <div class="text-muted mb-3">بدون نیاز به پرداخت اولیه</div>
+                    <ul class="list-unstyled mb-4">
+                        <li><i class="fas fa-check text-success me-2"></i>آغاز سریع با همه قابلیت‌های اصلی</li>
+                        <li><i class="fas fa-check text-success me-2"></i>دستیار اینستاگرام و پیامکی</li>
+                        <li><i class="fas fa-check text-success me-2"></i>باشگاه مشتریان پایه</li>
+                    </ul>
+                    <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#registerModal">شروع رایگان</button>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="pricing-card popular h-100">
+                    <div class="pricing-badge">سالانه</div>
+                    <h5 class="fw-bold mb-2">پلن ۱ ساله</h5>
+                    <div class="price mb-2">۲,۹۰۰,۰۰۰ تومان / سال</div>
+                    <div class="text-muted mb-3">شامل همه امکانات + به‌روزرسانی‌ها</div>
+                    <ul class="list-unstyled mb-4">
+                        <li><i class="fas fa-check text-success me-2"></i>پشتیبانی اولویت‌دار</li>
+                        <li><i class="fas fa-check text-success me-2"></i>تحلیل و گزارش‌دهی پیشرفته</li>
+                        <li><i class="fas fa-check text-success me-2"></i>ظرفیت پیامکی و محتوایی بیشتر</li>
+                    </ul>
+                    <a class="btn btn-warning w-100 text-dark fw-bold" href="tel:+989137640338">خرید پلن سالانه</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+<!-- FAQ Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-primary mb-3">سوالات متداول</h2>
+            <p class="lead text-muted">پاسخ به پرسش‌های پرتکرار</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="faq-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">چطور کد تایید را دریافت کنم؟</h6>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="text-muted mt-2">شماره موبایل خود را وارد کنید تا کد تایید برای شما ارسال شود.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">آیا امکان لغو اشتراک وجود دارد؟</h6>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="text-muted mt-2">بله، هر زمان می‌توانید اشتراک خود را لغو کنید.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">آیا برنامه آزمایشی دارید؟</h6>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="text-muted mt-2">بله، ۳۰ روز آزمایش رایگان برای همه کاربران جدید فعال است.</div>
                 </div>
             </div>
         </div>
@@ -1409,6 +1613,38 @@
                 heroSection.style.transform = `translateY(${rate}px)`;
             }
         });
+
+        // Navbar background on scroll
+        const nav = document.querySelector('.navbar');
+        function onScroll() {
+            if (!nav) return;
+            if (window.scrollY > 10) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+        }
+        onScroll();
+        window.addEventListener('scroll', onScroll);
+
+        // Animated counters for stats section
+        const counters = document.querySelectorAll('[data-counter="true"]');
+        if (counters.length) {
+            const counterObserver = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const el = entry.target;
+                    const target = parseInt(el.getAttribute('data-target')) || 0;
+                    const duration = 1200;
+                    const start = performance.now();
+                    function tick(ts) {
+                        const progress = Math.min((ts - start) / duration, 1);
+                        const value = Math.floor(progress * target);
+                        el.textContent = value.toLocaleString('fa-IR');
+                        if (progress < 1) requestAnimationFrame(tick);
+                    }
+                    requestAnimationFrame(tick);
+                    obs.unobserve(el);
+                });
+            }, { threshold: 0.4 });
+            counters.forEach(c => counterObserver.observe(c));
+        }
 
         // Show toast notification
         function showToast(message, type = 'success') {
